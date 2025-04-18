@@ -1,0 +1,227 @@
+/* client/src/styles/HomePage.css */
+.home-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("/background.png") no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Stars effect handled through background image */
+}
+
+.content-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  color: #e8e3d0;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.app-title {
+  font-family: "Hedvig Letters Serif", serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #e8e3d0;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.heart-icon {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: #e8e3d0;
+  opacity: 0.8;
+}
+
+.question-area {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.question-prompt {
+  font-family: "Ojuju", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #e8e3d0;
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.question-input {
+  width: 100%;
+  background-color: rgba(30, 30, 30, 0.7);
+  border: none;
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: #e8e3d0;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.question-input::placeholder {
+  color: rgba(232, 227, 208, 0.6);
+}
+
+.question-input:focus {
+  background-color: rgba(40, 40, 40, 0.8);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.start-reading-btn {
+  position: relative;
+  background-color: transparent;
+  color: #e8e3d0;
+  border: none;
+  font-family: "Hedvig Letters Serif", serif;
+  font-size: 1.4rem;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.start-reading-btn::before,
+.start-reading-btn::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e8e3d0, transparent);
+  top: 50%;
+}
+
+.start-reading-btn::before {
+  left: -50px;
+}
+
+.start-reading-btn::after {
+  right: -50px;
+}
+
+/* Add decorative elements on both sides of the button */
+.start-reading-btn::before {
+  content: "━━━";
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #e8e3d0;
+  opacity: 0.8;
+}
+
+.start-reading-btn::after {
+  content: "━━━";
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #e8e3d0;
+  opacity: 0.8;
+}
+
+.start-reading-btn:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 2rem;
+  }
+
+  .question-prompt {
+    font-size: 1.5rem;
+  }
+
+  .start-reading-btn::before,
+  .start-reading-btn::after {
+    display: none;
+  }
+
+  .start-reading-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.8rem;
+  }
+
+  .question-prompt {
+    font-size: 1.3rem;
+  }
+
+  .question-input {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
+/* Add subtle animation to make the page feel more alive */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.content-container {
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Optional - add slight pulse to the heart icon */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart-icon {
+  animation: pulse 2s infinite ease-in-out;
+}
