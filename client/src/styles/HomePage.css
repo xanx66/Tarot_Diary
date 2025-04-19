@@ -6,8 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/background.png") no-repeat center center;
-  background-size: cover;
   overflow: hidden;
 }
 
@@ -32,139 +30,83 @@
   max-width: 800px;
   padding: 2rem;
   color: #e8e3d0;
-}
-
-.logo-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.app-title {
-  font-family: "Hedvig Letters Serif", serif;
-  font-size: 2.5rem;
-  font-weight: 400;
-  color: #e8e3d0;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.heart-icon {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  color: #e8e3d0;
-  opacity: 0.8;
+  margin-top: 2rem; /* Add spacing below the header */
 }
 
 .question-area {
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
   margin-bottom: 4rem;
+  margin-top: 2rem; /* Add more space at the top since logo is now in header */
 }
 
 .question-prompt {
-  font-family: "Ojuju", sans-serif;
-  font-size: 1.8rem;
-  font-weight: 300;
-  color: #e8e3d0;
-  margin-bottom: 2rem;
+  color: var(--primary-text);
   text-align: center;
-  line-height: 1.4;
+  text-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  font-family: Ojuju;
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .input-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
 }
 
 .question-input {
   width: 100%;
   background-color: rgba(30, 30, 30, 0.7);
   border: none;
-  border-radius: 4px;
-  padding: 1rem;
-  font-size: 1.2rem;
-  color: #e8e3d0;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  color: var(--primary-text);
+  font-family: "Hedvig Letters Serif", serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   outline: none;
   transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 242, 195, 0.4);
 }
 
 .question-input::placeholder {
-  color: rgba(232, 227, 208, 0.6);
+  color: rgba(232, 227, 208, 0.4);
 }
 
 .question-input:focus {
-  background-color: rgba(40, 40, 40, 0.8);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
 }
 
 .start-reading-btn {
+  width: 360px;
   position: relative;
-  background-color: transparent;
+  background: url("/button-bg.png") no-repeat center center;
+  background-size: contain;
   color: #e8e3d0;
   border: none;
   font-family: "Hedvig Letters Serif", serif;
   font-size: 1.4rem;
-  padding: 0.8rem 2rem;
+  padding: 60px 80px 64px 80px;
   cursor: pointer;
   transition: all 0.3s ease;
   letter-spacing: 1px;
 }
 
-.start-reading-btn::before,
-.start-reading-btn::after {
-  content: "";
-  position: absolute;
-  width: 40px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #e8e3d0, transparent);
-  top: 50%;
-}
-
-.start-reading-btn::before {
-  left: -50px;
-}
-
-.start-reading-btn::after {
-  right: -50px;
-}
-
-/* Add decorative elements on both sides of the button */
-.start-reading-btn::before {
-  content: "━━━";
-  position: absolute;
-  left: -60px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #e8e3d0;
-  opacity: 0.8;
-}
-
-.start-reading-btn::after {
-  content: "━━━";
-  position: absolute;
-  right: -60px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #e8e3d0;
-  opacity: 0.8;
-}
-
 .start-reading-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .app-title {
-    font-size: 2rem;
-  }
-
   .question-prompt {
     font-size: 1.5rem;
   }
@@ -181,10 +123,6 @@
 }
 
 @media (max-width: 480px) {
-  .app-title {
-    font-size: 1.8rem;
-  }
-
   .question-prompt {
     font-size: 1.3rem;
   }
@@ -207,21 +145,4 @@
 
 .content-container {
   animation: fadeIn 2s ease-in-out;
-}
-
-/* Optional - add slight pulse to the heart icon */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.heart-icon {
-  animation: pulse 2s infinite ease-in-out;
 }

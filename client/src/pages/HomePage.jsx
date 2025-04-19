@@ -21,10 +21,7 @@ const HomePage = () => {
       <div className="stars-container">{/* Stars are added via CSS */}</div>
 
       <div className="content-container">
-        <div className="logo-area">
-          <h1 className="app-title">Arcana Whispers</h1>
-          <div className="heart-icon">♥</div>
-        </div>
+        {/* Logo and title are now in the Header component */}
 
         <div className="question-area">
           <h2 className="question-prompt">

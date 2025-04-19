@@ -9,8 +9,8 @@
 }
 
 :root {
-  --primary-text: #e8e3d0;
-  --secondary-text: #c0b9a5;
+  --primary-text: #e5d9af;
+  --secondary-text: #b8a4c4;
   --dark-bg: #121212;
   --input-bg: rgba(30, 30, 30, 0.7);
   --accent: #8b7e62;
@@ -24,6 +24,9 @@ body {
   background-color: var(--dark-bg);
   color: var(--primary-text);
   overflow-x: hidden;
+  background: url("/background.png") no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
 }
 
 h1,
@@ -54,7 +57,7 @@ a {
 
 input,
 textarea {
-  font-family: "Poppins", sans-serif;
+  font-family: "Hedvig Letters Serif", sans-serif;
 }
 
 /* Custom scrollbar for webkit browsers */
