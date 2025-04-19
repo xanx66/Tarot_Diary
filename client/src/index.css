@@ -1,0 +1,79 @@
+/* client/src/index.css */
+@import url("https://fonts.googleapis.com/css2?family=Ojuju:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&display=swap");
+
+:root {
+  font-family: "Ojuju", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #e8e3d0;
+  background-color: #121212;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Hedvig Letters Serif", serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Add a subtle static noise overlay to enhance the mystical feeling */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoZDgQNtr3V5gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAp0lEQVRo3u3ZwQ2DMAwF0N84A3SJrvNLuLJJR2g3KCBFE1VqQUL+x7bkK4UomMcVfxZjG+M0xnWMR2X4iDGnL81v0B1yiYTcI+FFJL2I5P+RDANIMj+Sm+uRpHx+syS6gM0tVrhYjVhtsbKLVRMrvFg9sOqLVQurv1gtsAaJ1QJrjFg1sQaJVRNrkFglsQaLVRJrsFg5sS4Qa5k4P/jlXGiSf8yFXn4AGTpjm3ik3pIAAAAASUVORK5CYII=");
+  opacity: 0.03;
+  z-index: 1000;
+}

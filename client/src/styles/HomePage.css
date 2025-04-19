@@ -1,0 +1,148 @@
+/* client/src/styles/HomePage.css */
+.home-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Stars effect handled through background image */
+}
+
+.content-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  color: #e8e3d0;
+  margin-top: 2rem; /* Add spacing below the header */
+}
+
+.question-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  margin-bottom: 4rem;
+  margin-top: 2rem; /* Add more space at the top since logo is now in header */
+}
+
+.question-prompt {
+  color: var(--primary-text);
+  text-align: center;
+  text-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  font-family: Ojuju;
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.question-input {
+  width: 100%;
+  background-color: rgba(30, 30, 30, 0.7);
+  border: none;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  color: var(--primary-text);
+  font-family: "Hedvig Letters Serif", serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  outline: none;
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 242, 195, 0.4);
+}
+
+.question-input::placeholder {
+  color: rgba(232, 227, 208, 0.4);
+}
+
+.question-input:focus {
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.start-reading-btn {
+  width: 360px;
+  position: relative;
+  background: url("/button-bg.png") no-repeat center center;
+  background-size: contain;
+  color: #e8e3d0;
+  border: none;
+  font-family: "Hedvig Letters Serif", serif;
+  font-size: 1.4rem;
+  padding: 60px 80px 64px 80px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.start-reading-btn:hover {
+  transform: scale(1.03);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .question-prompt {
+    font-size: 1.5rem;
+  }
+
+  .start-reading-btn::before,
+  .start-reading-btn::after {
+    display: none;
+  }
+
+  .start-reading-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-prompt {
+    font-size: 1.3rem;
+  }
+
+  .question-input {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
+/* Add subtle animation to make the page feel more alive */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.content-container {
+  animation: fadeIn 2s ease-in-out;
+}

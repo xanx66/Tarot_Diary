@@ -1,0 +1,103 @@
+/* client/src/styles/Header.css */
+.app-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 5rem 0;
+  z-index: 10;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 18, 18, 0.8) 0%,
+    rgba(18, 18, 18, 0) 100%
+  );
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.header-logo-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.header-logo-link:hover {
+  transform: scale(1.02);
+}
+
+.header-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.header-title {
+  color: var(--primary-text);
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Ojuju", sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.header-heart {
+  width: 48px;
+  margin-top: 0.5rem;
+}
+
+.heart-icon {
+  width: 100%;
+  height: auto;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0.8rem 0;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+
+  .header-heart {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0.6rem 0;
+  }
+
+  .header-title {
+    font-size: 1.3rem;
+  }
+
+  .header-heart {
+    font-size: 0.9rem;
+  }
+}
