@@ -18,11 +18,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <div className="stars-container">{/* Stars are added via CSS */}</div>
-
       <div className="content-container">
-        {/* Logo and title are now in the Header component */}
-
         <div className="question-area">
           <h2 className="question-prompt">
             What would you like to talk
