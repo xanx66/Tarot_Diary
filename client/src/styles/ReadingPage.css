@@ -1,0 +1,376 @@
+/* client/src/styles/ReadingPage.css */
+.reading-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding-top: 14rem; /* Space for header */
+  padding-bottom: 3rem;
+}
+
+.stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Stars effect handled through background image */
+}
+
+.reading-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  color: #e8e3d0;
+}
+
+.question-display {
+  font-family: "Ojuju", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #e8e3d0;
+  margin-bottom: 3rem;
+  text-align: center;
+  max-width: 800px;
+  opacity: 0.8;
+}
+
+/* Deck container */
+.deck-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  perspective: 1000px; /* For 3D transform effects */
+}
+
+.tarot-deck {
+  margin-bottom: 2rem;
+  cursor: pointer;
+  will-change: transform;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 15px rgba(232, 227, 208, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.tarot-deck:hover {
+  box-shadow: 0 0 25px rgba(232, 227, 208, 0.5);
+}
+
+/* Shuffle button */
+.shuffle-btn {
+  position: relative;
+  background-color: transparent;
+  color: #e8e3d0;
+  border: 1px solid rgba(232, 227, 208, 0.3);
+  border-radius: 6px;
+  font-family: "Cormorant", serif;
+  font-size: 1.2rem;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(232, 227, 208, 0.2);
+}
+
+.shuffle-btn:hover {
+  background-color: rgba(232, 227, 208, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(232, 227, 208, 0.3);
+}
+
+.shuffle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Reading area */
+.reading-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Selection guidance */
+.selection-guidance {
+  margin-bottom: 2rem;
+  font-family: "Ojuju", sans-serif;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* Card fan for selection */
+.card-fan {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 400px;
+  margin: 0 auto 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+/* Individual card in fan - these are now positioned by React Spring */
+.card-fan .tarot-card-wrapper {
+  position: absolute;
+  transform-origin: bottom center;
+  will-change: transform;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card-fan .tarot-card-wrapper:hover {
+  z-index: 100 !important;
+  transform: translateY(-20px) scale(1.05) !important;
+}
+
+/* Selected card indicator */
+.card-fan .tarot-card-wrapper.selected {
+  box-shadow: 0 0 20px rgba(255, 255, 128, 0.7);
+}
+
+/* Selected cards display */
+.selected-cards-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selected-cards {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+/* Animation for card reveal */
+@keyframes cardReveal {
+  0% {
+    transform: rotateY(180deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+.selected-cards .tarot-card-wrapper.revealed {
+  animation: cardReveal 1s ease forwards;
+}
+
+/* Reading interpretation section */
+.reading-interpretation {
+  width: 100%;
+  max-width: 800px;
+  background-color: rgba(18, 18, 18, 0.8);
+  border: 1px solid rgba(232, 227, 208, 0.3);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 3rem;
+  box-shadow: 0 0 20px rgba(232, 227, 208, 0.1);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reading-interpretation h3 {
+  font-family: "Cormorant", serif;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #e8e3d0;
+}
+
+.reading-interpretation h4 {
+  font-family: "Cormorant", serif;
+  font-size: 1.3rem;
+  margin: 1.5rem 0 0.5rem 0;
+  color: #e8e3d0;
+}
+
+.card-meaning {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(232, 227, 208, 0.2);
+}
+
+.card-meaning:last-child {
+  border-bottom: none;
+}
+
+.card-meaning p {
+  font-family: "Ojuju", sans-serif;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.overall-interpretation {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(232, 227, 208, 0.4);
+}
+
+.overall-interpretation p {
+  font-family: "Ojuju", sans-serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+/* New reading button */
+.new-reading-btn {
+  display: block;
+  background-color: transparent;
+  color: #e8e3d0;
+  border: 1px solid rgba(232, 227, 208, 0.5);
+  border-radius: 6px;
+  font-family: "Cormorant", serif;
+  font-size: 1.2rem;
+  padding: 0.8rem 2rem;
+  margin: 2rem auto 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(232, 227, 208, 0.2);
+}
+
+.new-reading-btn:hover {
+  background-color: rgba(232, 227, 208, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(232, 227, 208, 0.3);
+}
+
+/* Styles for react-spring animated components */
+.animated-card {
+  position: absolute;
+  will-change: transform;
+  transform-origin: bottom center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.animated-card:hover {
+  z-index: 100 !important;
+  box-shadow: 0 0 20px rgba(232, 227, 208, 0.6);
+}
+
+.animated-card.selected {
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); /* Gold glow for selected */
+}
+
+/* Card positions for the reading */
+.card-position {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Cormorant", serif;
+  font-size: 1.1rem;
+  color: #e8e3d0;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+}
+
+.card-position.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .reading-page {
+    padding-top: 5rem;
+  }
+
+  .question-display {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .card-fan {
+    height: 300px;
+    transform: scale(0.8);
+  }
+
+  .selected-cards {
+    gap: 1.5rem;
+  }
+
+  .reading-interpretation {
+    padding: 1.5rem;
+  }
+
+  .reading-interpretation h3 {
+    font-size: 1.5rem;
+  }
+
+  .reading-interpretation h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .reading-page {
+    padding-top: 4rem;
+  }
+
+  .question-display {
+    font-size: 1rem;
+  }
+
+  .card-fan {
+    height: 250px;
+    transform: scale(0.7);
+  }
+
+  .selected-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .reading-interpretation {
+    padding: 1rem;
+  }
+
+  .reading-interpretation h3 {
+    font-size: 1.3rem;
+  }
+
+  .reading-interpretation h4 {
+    font-size: 1.1rem;
+  }
+
+  .new-reading-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
+}

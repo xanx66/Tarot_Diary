@@ -5,24 +5,35 @@ import "../styles/HomePage.css";
 
 const HomePage = () => {
   const [question, setQuestion] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleStartReading = () => {
-    // Navigate to reading page with the question as state/query parameter if provided
-    if (question.trim()) {
-      navigate(`/reading?question=${encodeURIComponent(question)}`);
-    } else {
-      navigate("/reading");
+    // Validate the question input
+    if (errorMessage) {
+      setErrorMessage("");
+    }
+
+    // Check if the question is valid (not empty)
+    if (question.trim() === "") {
+      setErrorMessage("Please enter a question.");
+      return;
+    }
+
+    // Navigate to the ReadingPage with the question as a query parameter
+    navigate(`/reading?question=${encodeURIComponent(question)}`);
+    setQuestion("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleStartReading();
     }
   };
 
   return (
     <div className="home-page">
-      <div className="stars-container">{/* Stars are added via CSS */}</div>
-
       <div className="content-container">
-        {/* Logo and title are now in the Header component */}
-
         <div className="question-area">
           <h2 className="question-prompt">
             What would you like to talk
@@ -35,9 +46,13 @@ const HomePage = () => {
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
+              onKeyDown={handleKeyPress}
               placeholder="My question is ..."
               className="question-input"
             />
+            {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
           </div>
         </div>
 

@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5rem;
+  gap: 4rem;
   margin-bottom: 4rem;
   margin-top: 2rem; /* Add more space at the top since logo is now in header */
 }
@@ -47,9 +47,8 @@
   color: var(--primary-text);
   text-align: center;
   text-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
-  font-family: Ojuju;
+  font-family: "Cormorant", serif;
   font-size: 2.25rem;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
@@ -57,20 +56,22 @@
 .input-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 0.5rem;
 }
 
 .question-input {
   width: 100%;
-  background-color: rgba(30, 30, 30, 0.7);
+  background-color: rgba(34, 34, 34, 0.5);
   border: none;
   border-radius: 8px;
   padding: 1.5rem 2rem;
   color: var(--primary-text);
-  font-family: "Hedvig Letters Serif", serif;
+  font-family: "Cormorant", serif;
   font-size: 1.5rem;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   outline: none;
   transition: all 0.3s ease;
@@ -82,27 +83,34 @@
 }
 
 .question-input:focus {
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 60px rgba(191, 167, 93, 0.5);
+}
+
+.error-message {
+  font-family: "Cormorant", serif;
+  font-size: 1.2rem;
 }
 
 .start-reading-btn {
-  width: 360px;
   position: relative;
-  background: url("/button-bg.png") no-repeat center center;
-  background-size: contain;
-  color: #e8e3d0;
-  border: none;
-  font-family: "Hedvig Letters Serif", serif;
+  color: var(--primary-text);
+  border: var(--primary-text) 1px solid;
+  border-radius: 999px;
+  background-color: rgba(70, 18, 118, 0.5);
+  box-shadow: 0 0 10px rgba(232, 227, 208, 0.2);
+  backdrop-filter: blur(10px);
+  font-family: "Cormorant", serif;
   font-size: 1.4rem;
-  padding: 60px 80px 64px 80px;
+  font-weight: 600;
+  padding: 16px 60px;
   cursor: pointer;
   transition: all 0.3s ease;
   letter-spacing: 1px;
 }
 
 .start-reading-btn:hover {
-  transform: scale(1.03);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  transform: scale(1.02);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Responsive adjustments */
