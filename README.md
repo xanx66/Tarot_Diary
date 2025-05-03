@@ -26,7 +26,7 @@ Currently working on:
 
 - **Frontend**: React with Vite, React Router
 - **UI**: Custom CSS with radiant borders, cosmic theme
-- **Fonts**: Ojuju and Hedvig Letters Serif
+- **Fonts**: Ojuju and Cormorant
 - **Backend**: Node.js with Express
 - **Database**: MongoDB for user data and journal entries
 - **Authentication**: JWT (JSON Web Tokens)

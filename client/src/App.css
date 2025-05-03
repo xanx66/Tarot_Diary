@@ -1,6 +1,7 @@
 /* client/src/App.css */
 @import url("https://fonts.googleapis.com/css2?family=Ojuju:wght@200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap");
 
 * {
   margin: 0;
@@ -23,7 +24,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--dark-bg);
   color: var(--primary-text);
-  overflow-x: hidden;
+  height: 100vh;
   background: url("/background.png") no-repeat center center;
   background-size: cover;
   overflow: hidden;
@@ -35,14 +36,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Hedvig Letters Serif", serif;
+  font-family: "Cormorant", serif;
   font-weight: 400;
 }
 
 .app {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 button {
@@ -57,7 +59,7 @@ a {
 
 input,
 textarea {
-  font-family: "Hedvig Letters Serif", sans-serif;
+  font-family: "Cormorant", sans-serif;
 }
 
 /* Custom scrollbar for webkit browsers */

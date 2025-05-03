@@ -10,9 +10,6 @@ const Header = () => {
         <Link to="/" className="header-logo-link">
           <h1 className="header-title">Arcana Whispers</h1>
         </Link>
-        <div className="header-heart">
-          <img src="/header-heart.png" alt="Heart" className="heart-icon" />
-        </div>
       </div>
     </header>
   );

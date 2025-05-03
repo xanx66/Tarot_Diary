@@ -9,11 +9,12 @@
   transform-style: preserve-3d;
   margin: 10px;
   z-index: 1;
+  pointer-events: auto; /* Ensure clicks register during animations */
 }
 
 /* Hover effect */
-.tarot-card:hover:not(.selected):not(.revealed) {
-  transform: translateY(-10px);
+.tarot-card:hover:not(.selected):not(.revealed):not(.shuffling) {
+  transform: translateY(-20px);
   z-index: 50;
   transition: transform 0.3s ease, z-index 0s;
 }
@@ -26,6 +27,10 @@
   transform: none;
 }
 
+.tarot-card.shuffling:hover {
+  transform: none;
+}
+
 /* Card inner container for flip effect */
 .card-inner {
   position: relative;
@@ -33,7 +38,6 @@
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 }
 
@@ -56,8 +60,8 @@
 }
 
 .card-back {
-  background-color: #121212;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e8e3d0' fill-opacity='0.2'%3E%3Cpath d='M10 0l10 10-10 10L0 10z'/%3E%3C/g%3E%3C/svg%3E");
+  background-color: #000;
+  background-image: url("/images/tarot-back.png");
   border: 1px solid rgba(232, 227, 208, 0.5);
 }
 
@@ -72,8 +76,17 @@
   transform: rotateY(180deg);
 }
 
-/* Reversed card style */
+/* Reversed card style - handle both orientations */
 .tarot-card.reversed .card-front {
+  transform: rotateY(180deg) rotate(180deg);
+}
+
+/* Special handling for reversed cards during animation */
+.animated-wrapper .tarot-card.reversed .card-inner {
+  transform: rotate(180deg);
+}
+
+.animated-wrapper .tarot-card.reversed.revealed .card-inner {
   transform: rotateY(180deg) rotate(180deg);
 }
 
@@ -107,6 +120,10 @@
   z-index: -1;
   opacity: 0;
   animation: pulse 2s infinite ease-in-out;
+}
+
+.tarot-card.selected .card-glow {
+  opacity: 1;
 }
 
 @keyframes pulse {
@@ -150,7 +167,7 @@
   left: 10px;
   right: 10px;
   text-align: center;
-  font-family: "Hedvig Letters Serif", serif;
+  font-family: "Cormorant", serif;
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.7);
   background-color: rgba(255, 255, 255, 0.7);
@@ -158,11 +175,61 @@
   border-radius: 3px;
 }
 
+/* Spring Animation Integration */
+/* This wrapper will be used by the animated component */
+.animated-wrapper {
+  position: absolute;
+  will-change: transform;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+/* Make the card inside a spring animated wrapper behave correctly */
+.animated-wrapper .tarot-card {
+  margin: 0;
+  transition: transform 0.2s ease;
+}
+
+.animated-wrapper:hover
+  .tarot-card:not(.selected):not(.revealed):not(.shuffling) {
+  transform: translateY(-20px);
+}
+
+/* Special transform for cards in fan layout */
+.card-fan .animated-wrapper {
+  transform-origin: center 120%;
+}
+
+.card-fan .animated-wrapper:hover {
+  z-index: 100;
+}
+
+/* Selection highlight for animated cards */
+.card-fan .animated-wrapper.selected {
+  z-index: 100;
+}
+
+.card-fan .animated-wrapper.selected .tarot-card:before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  z-index: -1;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .tarot-card {
     width: 150px;
     height: 255px;
+  }
+
+  .card-fan .animated-wrapper {
+    transform-origin: center 110%;
   }
 }
 
@@ -179,5 +246,9 @@
 
   .position-indicator.reversed {
     top: -30px;
+  }
+
+  .card-fan .animated-wrapper {
+    transform-origin: center 100%;
   }
 }

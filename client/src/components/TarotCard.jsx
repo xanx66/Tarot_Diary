@@ -6,6 +6,7 @@ const TarotCard = ({
   id,
   frontImage = "/cards/back.png",
   backImage = "/cards/back.png",
+  isShuffling = true,
   isReversed = false,
   isSelected = false,
   isRevealed = false,
@@ -43,8 +44,8 @@ const TarotCard = ({
   };
 
   const cardClasses = `
-    tarot-card 
-    ${className} 
+    tarot-card ${className} 
+    ${isShuffling ? "shuffling" : ""}
     ${selected ? "selected" : ""} 
     ${revealed ? "revealed" : ""} 
     ${isReversed ? "reversed" : ""} 

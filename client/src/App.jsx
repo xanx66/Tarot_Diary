@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import ReadingPage from "./pages/ReadingPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import "./App.css";
+import TarotShuffle from "./pages/TarotShuffle";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/reading" element={<ReadingPage />} />
+            <Route path="/test" element={<TarotShuffle />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
