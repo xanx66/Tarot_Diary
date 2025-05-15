@@ -5,6 +5,7 @@ import { useSpring, useSprings, animated, config } from "@react-spring/web";
 import TarotCard from "../components/TarotCard";
 import tarotService from "../services/tarotService";
 import "../styles/ReadingPage.css";
+import ReadingChat from "../components/ReadingChat";
 
 const ReadingPage = () => {
   const location = useLocation();
@@ -326,8 +327,6 @@ const ReadingPage = () => {
       </div>
 
       <div className="reading-content">
-        <h2 className="question-display">{question}</h2>
-
         <div className="reading-area">
           {!selectionComplete ? (
             <>
@@ -370,60 +369,34 @@ const ReadingPage = () => {
               </div>
             </>
           ) : (
-            <div className="selected-cards-container">
-              <div className="selected-cards">
-                {selectedCardIds.map((cardId, index) => {
-                  const card = cardDeck.find((c) => c.id === cardId);
-                  return (
-                    <TarotCard
-                      key={cardId}
-                      id={cardId}
-                      frontImage={card.img}
-                      backImage="/cards/back.png"
-                      isSelected={true}
-                      isRevealed={revealedCardIds.includes(cardId)}
-                      isReversed={card.isReversed}
-                      position={cardPositions[index]}
-                      animationDelay={index * 500}
-                    />
-                  );
-                })}
-              </div>
-
+            <>
               {readingResult && (
-                <div className="reading-interpretation">
-                  <h3>Your Reading</h3>
-
-                  <div className="cards-meaning">
-                    {readingResult.cards.map((card, index) => (
-                      <div key={index} className="card-meaning">
-                        <h4>
-                          {card.position}: {card.name}{" "}
-                          {card.isReversed ? "(Reversed)" : ""}
-                        </h4>
-                        <p>
-                          {card.isReversed
-                            ? card.meanings.reversed.join(", ")
-                            : card.meanings.upright.join(", ")}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="overall-interpretation">
-                    <h4>Overall Interpretation</h4>
-                    <p>{readingResult.overallInterpretation}</p>
-                  </div>
-
-                  <button
-                    className="new-reading-btn"
-                    onClick={handleNewReading}
-                  >
-                    New Reading
-                  </button>
-                </div>
+                <ReadingChat
+                  initialReading={{
+                    cards: selectedCardIds.map((cardId, index) => {
+                      const card = cardDeck.find((c) => c.id === cardId);
+                      return {
+                        ...card,
+                        position: cardPositions[index],
+                        isRevealed: true,
+                      };
+                    }),
+                    overallInterpretation: readingResult.overallInterpretation,
+                    question,
+                  }}
+                  suggestedResponses={[
+                    "What does this mean for my future?",
+                    "Tell me more about the Past card.",
+                    "How can I apply this reading?",
+                  ]}
+                  onSendMessage={async (message, chatHistory) => {
+                    // TODO: Replace with your GPT API call
+                    // For now, return a placeholder:
+                    return "This is where the AI's response will appear.";
+                  }}
+                />
               )}
-            </div>
+            </>
           )}
         </div>
         {!deckDisplayed && (

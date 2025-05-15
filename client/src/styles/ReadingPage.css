@@ -2,13 +2,13 @@
 .reading-page {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  padding-top: 14rem; /* Space for header */
+  padding-top: 3rem; /* Space for header */
   padding-bottom: 3rem;
 }
 
@@ -29,7 +29,8 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  height: 100%;
+  max-width: 1400px;
   padding: 0 2rem;
   color: #e8e3d0;
 }
@@ -98,6 +99,7 @@
 /* Reading area */
 .reading-area {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
