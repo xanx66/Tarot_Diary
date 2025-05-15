@@ -331,9 +331,9 @@ const ReadingPage = () => {
         <div className="reading-area">
           {!selectionComplete ? (
             <>
-              <p className="selection-guidance">
+              {deckDisplayed && <p className="selection-guidance">
                 Select three cards for your reading
-              </p>
+              </p>}
 
               <div className="card-fan">
                 {springs.map((style, index) => {

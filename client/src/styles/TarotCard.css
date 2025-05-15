@@ -7,28 +7,35 @@
   cursor: pointer;
   transition: transform 0.5s ease, z-index 0s ease 0.3s;
   transform-style: preserve-3d;
-  margin: 10px;
+  /* margin: 10px; */
   z-index: 1;
   pointer-events: auto; /* Ensure clicks register during animations */
 }
 
 /* Hover effect */
-.tarot-card:hover:not(.selected):not(.revealed):not(.shuffling) {
+.card-fan.tarot-card:hover:not(.selected):not(.revealed):not(.shuffling) {
   transform: translateY(-20px);
   z-index: 50;
   transition: transform 0.3s ease, z-index 0s;
 }
 
-.tarot-card.selected {
+.card-fan .tarot-card.selected {
+  transform: translateY(-40px);
   z-index: 10;
+  cursor: default;
 }
 
-.tarot-card.selected:hover {
+.card-fan .tarot-card.selected:hover {
+  transform: translateY(-40px);
+}
+
+.tarot-card.selected.revealed {
   transform: none;
 }
 
 .tarot-card.shuffling:hover {
   transform: none;
+  cursor: default;
 }
 
 /* Card inner container for flip effect */
@@ -61,7 +68,9 @@
 
 .card-back {
   background-color: #000;
-  background-image: url("/images/tarot-back.png");
+  background-image: url("/cards/back.png");
+  background-size: cover;
+  background-position: center;
   border: 1px solid rgba(232, 227, 208, 0.5);
 }
 
@@ -212,12 +221,12 @@
 .card-fan .animated-wrapper.selected .tarot-card:before {
   content: "";
   position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 20px rgba(255, 217, 0, 0.5);
   z-index: -1;
 }
 
