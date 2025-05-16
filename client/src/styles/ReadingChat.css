@@ -75,6 +75,9 @@
 .chat-bubble.loading {
   opacity: 0.7;
   font-style: italic;
+  background: #23213a;
+  color: #b6e0ff;
+  border: none;
 }
 
 .chat-typing-dots {
@@ -84,8 +87,21 @@
   animation: blink 1.2s infinite;
 }
 
+.chat-typing-dots span {
+  animation: blink 1.2s infinite;
+  font-size: 1.5em;
+  margin-right: 2px;
+}
+
+.chat-typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.chat-typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
 @keyframes blink {
-  0%, 100% { opacity: 0.5; }
+  0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }
 

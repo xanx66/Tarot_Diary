@@ -17,13 +17,13 @@ const ReadingPage = () => {
   const [shuffling, setShuffling] = useState(false);
   const [cardDeck, setCardDeck] = useState([]);
   const [selectedCardIds, setSelectedCardIds] = useState([]);
-  const [revealedCardIds, setRevealedCardIds] = useState([]);
   const [selectionComplete, setSelectionComplete] = useState(false);
-  const [readingResult, setReadingResult] = useState(null);
   const [maxSelections] = useState(3);
   const [deckDisplayed, setDeckDisplayed] = useState(false);
   const cardRefs = useRef([]);
   const CARDS_TO_SHOW = 51;
+  const [personality, setPersonality] = useState("default");
+  const [gender, setGender] = useState("");
 
   // Card positions for 3-card spread
   const cardPositions = ["Past", "Present", "Future"];
@@ -32,16 +32,6 @@ const ReadingPage = () => {
   useEffect(() => {
     initializeDeck();
   }, []);
-
-  // Watch for complete selection and generate reading
-  useEffect(() => {
-    if (
-      selectedCardIds.length === maxSelections &&
-      revealedCardIds.length === maxSelections
-    ) {
-      generateReadingResults();
-    }
-  }, [revealedCardIds]);
 
   // Card pile spring animation
   const pileProps = useSpring({
@@ -280,42 +270,10 @@ const ReadingPage = () => {
     // If we've reached max selections, begin the reveal process
     if (newSelectedIds.length === maxSelections) {
       setSelectionComplete(true);
-
-      // Reveal cards one by one with delay
-      newSelectedIds.forEach((id, index) => {
-        setTimeout(() => {
-          setRevealedCardIds((prev) => [...prev, id]);
-        }, (index + 1) * 1000); // Stagger reveals by 1 second
-      });
     }
   };
 
-  // Generate the reading results once all cards are revealed
-  const generateReadingResults = () => {
-    // Get the selected cards with their details
-    const selectedCards = selectedCardIds.map((id, index) => {
-      const card = cardDeck.find((c) => c.id === id);
-      return {
-        ...card,
-        position: cardPositions[index],
-        isRevealed: true,
-      };
-    });
-
-    // Create reversals array for the reading
-    const reversals = selectedCards.map((card) => card.isReversed);
-
-    // Generate the complete reading
-    const reading = tarotService.generateReading(
-      selectedCardIds,
-      cardPositions,
-      reversals
-    );
-
-    setReadingResult(reading);
-  };
-
-  // Start a new reading
+  // Handle new reading
   const handleNewReading = () => {
     navigate("/");
   };
@@ -380,30 +338,20 @@ const ReadingPage = () => {
             </>
           ) : (
             <>
-              {readingResult && (
+              {selectionComplete && (
                 <ReadingChat
-                  initialReading={{
-                    cards: selectedCardIds.map((cardId, index) => {
-                      const card = cardDeck.find((c) => c.id === cardId);
-                      return {
-                        ...card,
-                        position: cardPositions[index],
-                        isRevealed: true,
-                      };
-                    }),
-                    overallInterpretation: readingResult.overallInterpretation,
-                    question,
-                  }}
-                  suggestedResponses={[
-                    "What does this mean for my future?",
-                    "Tell me more about the Past card.",
-                    "How can I apply this reading?",
-                  ]}
-                  onSendMessage={async (message, chatHistory) => {
-                    // TODO: Replace with your GPT API call
-                    // For now, return a placeholder:
-                    return "This is where the AI's response will appear.";
-                  }}
+                  question={question}
+                  cards={selectedCardIds.map((cardId, index) => {
+                    const card = cardDeck.find((c) => c.id === cardId);
+                    return {
+                      ...card,
+                      position: cardPositions[index],
+                      isRevealed: true,
+                    };
+                  })}
+                  personality={personality}
+                  gender={gender}
+                  onStartNewQuestion={handleNewReading}
                 />
               )}
             </>

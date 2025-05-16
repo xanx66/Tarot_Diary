@@ -40,5 +40,6 @@
     "jsdom": "^23.0.1",
     "vite": "^6.3.1",
     "vitest": "^0.34.6"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

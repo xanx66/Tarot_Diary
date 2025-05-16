@@ -1,62 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/ReadingChat.css"; // You will create this for the cosmic style
+import { getInitialReading, chatWithAI } from "../api/tarotApi";
 
 const ReadingChat = ({
-  initialReading, // { cards: [...], overallInterpretation: "...", question: "..." }
-  onSendMessage,  // async (message, chatHistory) => { ... } (for GPT API)
-  suggestedResponses = [],
+  question,
+  cards,
+  personality = "default",
+  gender = "",
+  onStartNewQuestion,
 }) => {
-  const [chat, setChat] = useState([
-    {
-      role: "assistant",
-      content: (
-        <div>
-          <div className="chat-reading-header">
-            <span className="chat-moon-icon">🌙</span>
-            <span className="chat-question">{initialReading.question}</span>
-          </div>
-          <div className="chat-cards-reveal">
-            {initialReading.cards.map((card, idx) => (
-              <div key={card.id} className="chat-card-summary">
-                <img src={card.img} alt={card.name} className="chat-card-img" />
-                <div>
-                  <b>{card.position}: {card.name} {card.isReversed ? "(Reversed)" : ""}</b>
-                  <div className="chat-card-meaning">
-                    {card.isReversed
-                      ? card.meanings.reversed.join(", ")
-                      : card.meanings.upright.join(", ")}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="chat-overall-interpretation">
-            <b>Overall:</b> {initialReading.overallInterpretation}
-          </div>
-        </div>
-      ),
-    },
-  ]);
+  const [chat, setChat] = useState([]);
+  const [suggestedResponses, setSuggestedResponses] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
-  // Handle sending a message (user input or suggested)
+  // Fetch initial reading from API on mount
+  useEffect(() => {
+    const fetchInitialReading = async () => {
+      setInitialLoading(true);
+      try {
+        const data = await getInitialReading({
+          question,
+          cards: cards.map(card => ({
+            name: card.name,
+            position: card.position,
+            isReversed: card.isReversed,
+          })),
+          personality,
+          gender,
+        });
+        setChat([
+          {
+            role: "assistant",
+            content: data.reply,
+          },
+        ]);
+        setSuggestedResponses(data.suggestions || []);
+      } catch (e) {
+        setChat([
+          {
+            role: "assistant",
+            content: "Sorry, I couldn't get an AI interpretation.",
+          },
+        ]);
+        setSuggestedResponses([]);
+      }
+      setInitialLoading(false);
+    };
+    fetchInitialReading();
+    // eslint-disable-next-line
+  }, []);
+
+  // Send user message and get AI reply
   const sendMessage = async (message) => {
     if (!message.trim()) return;
     setChat((prev) => [...prev, { role: "user", content: message }]);
     setInput("");
     setLoading(true);
 
-    // Call GPT API (or parent handler)
-    if (onSendMessage) {
-      const response = await onSendMessage(message, chat);
+    const chatHistory = chat.map((msg) => ({
+      role: msg.role,
+      content: typeof msg.content === "string" ? msg.content : "",
+    }));
+
+    try {
+      const data = await chatWithAI({
+        chatHistory,
+        userMessage: message,
+        personality,
+        gender,
+      });
       setChat((prev) => [
         ...prev,
-        { role: "assistant", content: response },
+        { role: "assistant", content: data.reply },
       ]);
+      setSuggestedResponses(data.suggestions || []);
+    } catch (e) {
+      setChat((prev) => [
+        ...prev,
+        { role: "assistant", content: "Sorry, I couldn't get a response from the AI." },
+      ]);
+      setSuggestedResponses([]);
     }
     setLoading(false);
   };
+
+  // Loading animation (simple dots)
+  const LoadingBubble = () => (
+    <div className="chat-bubble assistant loading">
+      <span className="chat-typing-dots">
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </span>
+    </div>
+  );
 
   return (
     <div className="reading-chat-cosmic">
@@ -66,18 +105,10 @@ const ReadingChat = ({
             key={idx}
             className={`chat-bubble ${msg.role === "user" ? "user" : "assistant"}`}
           >
-            {typeof msg.content === "string" ? (
-              <span>{msg.content}</span>
-            ) : (
-              msg.content
-            )}
+            <span>{msg.content}</span>
           </div>
         ))}
-        {loading && (
-          <div className="chat-bubble assistant loading">
-            <span className="chat-typing-dots">...</span>
-          </div>
-        )}
+        {(loading || initialLoading) && <LoadingBubble />}
       </div>
       <div className="chat-suggestions">
         {suggestedResponses.map((resp, idx) => (
@@ -85,7 +116,7 @@ const ReadingChat = ({
             key={idx}
             className="chat-suggestion-btn"
             onClick={() => sendMessage(resp)}
-            disabled={loading}
+            disabled={loading || initialLoading}
           >
             {resp}
           </button>
@@ -98,14 +129,22 @@ const ReadingChat = ({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
           placeholder="Ask more about your reading..."
-          disabled={loading}
+          disabled={loading || initialLoading}
         />
         <button
           className="chat-send-btn"
           onClick={() => sendMessage(input)}
-          disabled={loading || !input.trim()}
+          disabled={loading || initialLoading || !input.trim()}
         >
           Send
+        </button>
+      </div>
+      <div className="chat-bottom-row">
+        <button
+          className="new-reading-btn"
+          onClick={onStartNewQuestion}
+        >
+          Start New Question
         </button>
       </div>
     </div>
