@@ -367,6 +367,16 @@ const ReadingPage = () => {
                   );
                 })}
               </div>
+
+              {!deckDisplayed && (
+                <button
+                  className="shuffle-btn"
+                  onClick={performRiffleShuffle}
+                  disabled={shuffling}
+                >
+                  {shuffling ? "Shuffling..." : "Shuffle"}
+                </button>
+              )}
             </>
           ) : (
             <>
@@ -399,17 +409,6 @@ const ReadingPage = () => {
             </>
           )}
         </div>
-        {!deckDisplayed && (
-          <div className={`deck-container ${shuffling ? "shuffling" : ""}`}>
-            <button
-              className="shuffle-btn"
-              onClick={performRiffleShuffle}
-              disabled={shuffling}
-            >
-              {shuffling ? "Shuffling..." : "Shuffle"}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
