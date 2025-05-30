@@ -11,6 +11,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const useOpenAI = process.env.USE_OPENAI === "true";
+
 function parseAIResponse(text) {
   try {
     return JSON.parse(text);
@@ -28,28 +30,46 @@ function parseAIResponse(text) {
 async function generateInitialReading(req, res) {
   const { question, cards, personality = "default", gender } = req.body;
   const systemPrompt = getSystemPrompt({ personality, gender });
-  const userMessage = buildInitialReadingUserMessage(question, cards, personality, gender);
+  const userMessage = buildInitialReadingUserMessage(
+    question,
+    cards,
+    personality,
+    gender
+  );
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userMessage },
-      ],
-      max_tokens: 700,
-      temperature: 0.8,
+  if (useOpenAI) {
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userMessage },
+        ],
+        max_tokens: 700,
+        temperature: 0.8,
+      });
+      const ai = parseAIResponse(completion.choices[0].message.content);
+      res.json(ai);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "AI request failed" });
+    }
+  } else {
+    return res.json({
+      reply: "This is a mock AI response for development.",
+      suggestions: ["Mock suggestion 1", "Mock suggestion 2"],
+      cards: req.body.cards || [],
     });
-    const ai = parseAIResponse(completion.choices[0].message.content);
-    res.json(ai);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "AI request failed" });
   }
 }
 
 async function chatWithAI(req, res) {
-  const { chatHistory, userMessage, personality = "default", gender } = req.body;
+  const {
+    chatHistory,
+    userMessage,
+    personality = "default",
+    gender,
+  } = req.body;
   const systemPrompt = getSystemPrompt({ personality, gender });
   const aiUserMessage = buildChatUserMessage(userMessage, personality, gender);
 
@@ -59,18 +79,26 @@ async function chatWithAI(req, res) {
     { role: "user", content: aiUserMessage },
   ];
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      max_tokens: 600,
-      temperature: 0.8,
+  if (useOpenAI) {
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages,
+        max_tokens: 600,
+        temperature: 0.8,
+      });
+      const ai = parseAIResponse(completion.choices[0].message.content);
+      res.json(ai);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "AI request failed" });
+    }
+  } else {
+    return res.json({
+      reply: "This is a mock AI response for development.",
+      suggestions: ["Mock suggestion 1", "Mock suggestion 2"],
+      cards: req.body.cards || [],
     });
-    const ai = parseAIResponse(completion.choices[0].message.content);
-    res.json(ai);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "AI request failed" });
   }
 }
 

@@ -8,8 +8,8 @@
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  padding-top: 3rem; /* Space for header */
-  padding-bottom: 3rem;
+  padding-top: 1.5rem; /* Space for header */
+  padding-bottom: 1.5rem;
 }
 
 .stars-container {
@@ -30,7 +30,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  max-width: 1400px;
+  max-width: 1600px;
   padding: 0 2rem;
   color: #e8e3d0;
 }

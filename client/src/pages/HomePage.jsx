@@ -25,12 +25,6 @@ const HomePage = () => {
     setQuestion("");
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleStartReading();
-    }
-  };
-
   return (
     <div className="home-page">
       <div className="content-container">
@@ -46,7 +40,6 @@ const HomePage = () => {
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              onKeyDown={handleKeyPress}
               placeholder="My question is ..."
               className="question-input"
             />

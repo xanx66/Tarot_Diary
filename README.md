@@ -14,21 +14,22 @@ We've completed the following milestones:
 - ✅ Built the landing page with radiant input field
 - ✅ Created responsive header component with logo
 - ✅ Set up modern React environment with Vite
-- ✅ Implemented basic routing structure
-- ✅ Modular API integration with axios and Vite proxy
-- ✅ CORS setup for secure frontend-backend communication
-- ✅ AI-powered tarot reading and chat (OpenAI integration)
+- ✅ Implemented AI-powered tarot reading/chat (with Aura the cat spirit)
+- ✅ Modular API integration and CORS setup
+- ✅ Card reveal animation in chat using TarotCard component
+- ✅ **Web chat trial now limited to 2 follow-up questions; after that, an ad for the upcoming app is shown and further chatting is disabled**
 
-Currently working on:
+## ✨ Features
 
-- 🔄 Daily card draw template
-- 🔄 Journal entry input and storage
-- 🔄 Tarot card database integration
+- **AI Tarot Chat:** Ask a question, get a mystical reading, and chat with Aura the cat spirit for follow-up insights.
+- **Card Reveal Animation:** Each card is revealed one by one with a flip animation and text fade-in, using the TarotCard component for consistency.
+- **Free Web Trial Limit:** Users can ask up to 2 follow-up questions in the web chat. After the limit, an ad for the upcoming TarotTales app is shown (with image and call to action), and further chatting is disabled.
+- **App Promotion:** The ad block encourages users to follow for updates and try the full-featured app when released.
+- **Modern, Modular Codebase:** Built with React, Vite, modular API utilities, and a scalable backend.
 
-**Note:**
-- The AI chat and modular API are now live and stable for both web and app trial.
-- The backend and frontend are fully decoupled and communicate securely via a modern, expandable API layer.
-- Guest users can now access readings without logging in, while logged-in users get additional features.
+## 📝 Changelog
+
+- **5/16/2024**: Added web chat trial limit and app ad feature. Improved card reveal animation and switched to using the TarotCard component in chat.
 
 ## 💻 Tech Stack
 
@@ -74,9 +75,10 @@ npm install
 4. Set up environment variables
 
    - **Backend**: Create a `.env` file in the `server` directory and add:
-     - Your MongoDB connection string as `MONGODB_URI`
-     - Your JWT secret as `JWT_SECRET`
+     - Your MongoDB connection string as `MONGODB_URI` (not needed for current progress)
+     - Your JWT secret as `JWT_SECRET` (not needed for current progress)
      - Your OpenAI API key as `OPENAI_API_KEY`
+     - If `USE_OPENAI` is set to `false` or omitted, the backend will use mock data for development/testing and will not call the real OpenAI API.
    - **Frontend**: For local development, you do **not** need to set `VITE_API_URL` in `.env` (leave it unset or blank). The Vite dev server will proxy API requests to the backend automatically.
    - For **production**, set `VITE_API_URL` in the frontend `.env.production` to your deployed backend URL (e.g., `VITE_API_URL=https://api.yourdomain.com`).
 
@@ -91,12 +93,14 @@ npm run dev
 ```
 
 ### CORS & API Communication
+
 - The backend uses CORS middleware with a function to allow requests from `http://localhost:5173` and `http://localhost:3000` during development.
 - The frontend uses axios with `withCredentials: true` and an interceptor to automatically attach the Bearer token if the user is logged in.
 - **Do not** set any `Access-Control-Allow-*` headers in the frontend; these are handled by the backend.
 - All API calls use relative URLs (e.g., `/api/ai/initial-reading`) in development, and the Vite proxy forwards them to the backend.
 
 ### Troubleshooting
+
 - If you see CORS errors or 403 Forbidden errors:
   - Make sure your backend is running and accessible at the correct port (default: 5000 or 8000).
   - Ensure your frontend is running at `http://localhost:5173`.
@@ -144,16 +148,16 @@ npm run dev
 
 ## 🗓 Timeline
 
-| **Week** | **Dates**       | **Milestone / Deliverable**                                                                                        | **Status**     |
-| -------- | --------------- | ------------------------------------------------------------------------------------------------------------------ | -------------- |
-| Week 1   | Apr 8 – Apr 14  | ✏️ Define core features, user stories, and layout sketches <br>🧠 Research tarot journaling habits & visual styles | ✅ Completed   |
-| Week 2   | Apr 15 – Apr 21 | 🎨 Design UI wireframes in Figma <br>🔧 Set up project repo and development environment                            | ✅ Completed   |
-| Week 3   | Apr 22 – Apr 28 | 💻 Implement daily card draw template <br>📝 Build basic journal entry input and storage                           | 🔄 In Progress |
+| **Week** | **Dates**       | **Milestone / Deliverable**                                                                                                    | **Status**     |
+| -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------- |
+| Week 1   | Apr 8 – Apr 14  | ✏️ Define core features, user stories, and layout sketches <br>🧠 Research tarot journaling habits & visual styles             | ✅ Completed   |
+| Week 2   | Apr 15 – Apr 21 | 🎨 Design UI wireframes in Figma <br>🔧 Set up project repo and development environment                                        | ✅ Completed   |
+| Week 3   | Apr 22 – Apr 28 | 💻 Implement daily card draw template <br>📝 Build basic journal entry input and storage                                       | 🔄 In Progress |
 | Week 4   | Apr 29 – May 5  | ✅ Modular API, CORS, and AI chat integration <br>📊 Develop spread tracker component <br>🌙 Add moon phases / visual elements | ✅ Completed   |
-| Week 5   | May 13 – May 19 | 🧪 Conduct user testing with tarot readers <br>🪄 Refine features based on feedback <br>🔐 Implement optional authentication | 🔄 In Progress |
-| Week 6   | May 20 – May 26 | 📁 Add instructional guide content <br>🔒 Address privacy considerations <br>📱 Mobile responsiveness improvements | ⏳ Planned     |
-| Week 7   | May 27 – Jun 2  | 🖼️ Polish visuals, animations, and interactions <br>🧩 Prepare optional reference section or printable add-ons     | ⏳ Planned     |
-| Week 8   | Jun 3 – Jun 9   | ✅ Finalize MVP for Stage 1 submission <br>📽️ Record demo video and update README                                  | ⏳ Planned     |
+| Week 5   | May 13 – May 19 | 🧪 Conduct user testing with tarot readers <br>🪄 Refine features based on feedback <br>🔐 Implement optional authentication   | 🔄 In Progress |
+| Week 6   | May 20 – May 26 | 📁 Add instructional guide content <br>🔒 Address privacy considerations <br>📱 Mobile responsiveness improvements             | ⏳ Planned     |
+| Week 7   | May 27 – Jun 2  | 🖼️ Polish visuals, animations, and interactions <br>🧩 Prepare optional reference section or printable add-ons                 | ⏳ Planned     |
+| Week 8   | Jun 3 – Jun 9   | ✅ Finalize MVP for Stage 1 submission <br>📽️ Record demo video and update README                                              | ⏳ Planned     |
 
 _Last updated: May 16, 2024_
 

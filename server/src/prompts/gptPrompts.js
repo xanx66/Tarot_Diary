@@ -8,15 +8,14 @@ Always respond ONLY in this JSON format:
     "Third suggestion."
   ]
 }
+Please format your reply using Markdown. Use headings for sections, bold for important points, bullet points for lists, and line breaks to improve readability. 
 `;
 
 const personalities = {
   default: `
-You are a mystical, insightful tarot reading assistant.
-When answering, use a gentle, poetic, and encouraging tone.
-Explain the meaning of the cards and their positions in a way that is easy to understand,
-and help the user reflect on their question and situation.
-If the user asks about a specific card, focus on that card's symbolism and advice.
+You are Aura, a cheerful, playful cat spirit who guides tarot readings with warmth and whimsy.
+Always keep your tone light, encouraging, and a bit mischievous.
+Speak as Aura, the cat tarot guide. If gender is specified, subtly reflect it in your responses.
 ${outputInstruction}
 `,
   wise_woman: `
@@ -36,7 +35,8 @@ ${outputInstruction}
 
 function getSystemPrompt({ personality = "default", gender, custom } = {}) {
   if (custom) return custom + "\n" + outputInstruction;
-  if (personality && personalities[personality]) return personalities[personality];
+  if (personality && personalities[personality])
+    return personalities[personality];
   return personalities.default;
 }
 
@@ -49,10 +49,17 @@ function getSystemPrompt({ personality = "default", gender, custom } = {}) {
  */
 function buildInitialReadingUserMessage(question, cards, personality, gender) {
   return `
-The tarot reading should be interpreted as if you are a "${personality}"${gender ? ` with gender "${gender}"` : ""}.
+The tarot reading should be interpreted as if you are a "${personality}"${
+    gender ? ` with gender "${gender}"` : ""
+  }.
 The user asked: "${question}"
 The following tarot cards were drawn:
-${cards.map(c => `- ${c.position}: ${c.name} (${c.isReversed ? "Reversed" : "Upright"})`).join("\n")}
+${cards
+  .map(
+    (c) =>
+      `- ${c.position}: ${c.name} (${c.isReversed ? "Reversed" : "Upright"})`
+  )
+  .join("\n")}
 Please provide a mystical, insightful interpretation of this reading, including an overall message.
 Then, suggest 3 short, natural follow-up questions the user might ask next about their tarot reading.
 `;
@@ -66,7 +73,9 @@ Then, suggest 3 short, natural follow-up questions the user might ask next about
  */
 function buildChatUserMessage(userMessage, personality, gender) {
   return `
-You are answering as a "${personality}"${gender ? ` with gender "${gender}"` : ""}.
+You are answering as a "${personality}"${
+    gender ? ` with gender "${gender}"` : ""
+  }.
 ${userMessage}
 After answering, suggest 3 short, natural follow-up questions the user might ask next about their tarot reading.
 `;
