@@ -5,6 +5,7 @@ import { useSpring, useSprings, animated, config } from "@react-spring/web";
 import TarotCard from "../components/TarotCard";
 import tarotService from "../services/tarotService";
 import "../styles/ReadingPage.css";
+import ReadingChat from "../components/ReadingChat";
 
 const ReadingPage = () => {
   const location = useLocation();
@@ -16,13 +17,13 @@ const ReadingPage = () => {
   const [shuffling, setShuffling] = useState(false);
   const [cardDeck, setCardDeck] = useState([]);
   const [selectedCardIds, setSelectedCardIds] = useState([]);
-  const [revealedCardIds, setRevealedCardIds] = useState([]);
   const [selectionComplete, setSelectionComplete] = useState(false);
-  const [readingResult, setReadingResult] = useState(null);
   const [maxSelections] = useState(3);
   const [deckDisplayed, setDeckDisplayed] = useState(false);
   const cardRefs = useRef([]);
   const CARDS_TO_SHOW = 51;
+  const [personality, setPersonality] = useState("default");
+  const [gender, setGender] = useState("");
 
   // Card positions for 3-card spread
   const cardPositions = ["Past", "Present", "Future"];
@@ -31,16 +32,6 @@ const ReadingPage = () => {
   useEffect(() => {
     initializeDeck();
   }, []);
-
-  // Watch for complete selection and generate reading
-  useEffect(() => {
-    if (
-      selectedCardIds.length === maxSelections &&
-      revealedCardIds.length === maxSelections
-    ) {
-      generateReadingResults();
-    }
-  }, [revealedCardIds]);
 
   // Card pile spring animation
   const pileProps = useSpring({
@@ -279,42 +270,10 @@ const ReadingPage = () => {
     // If we've reached max selections, begin the reveal process
     if (newSelectedIds.length === maxSelections) {
       setSelectionComplete(true);
-
-      // Reveal cards one by one with delay
-      newSelectedIds.forEach((id, index) => {
-        setTimeout(() => {
-          setRevealedCardIds((prev) => [...prev, id]);
-        }, (index + 1) * 1000); // Stagger reveals by 1 second
-      });
     }
   };
 
-  // Generate the reading results once all cards are revealed
-  const generateReadingResults = () => {
-    // Get the selected cards with their details
-    const selectedCards = selectedCardIds.map((id, index) => {
-      const card = cardDeck.find((c) => c.id === id);
-      return {
-        ...card,
-        position: cardPositions[index],
-        isRevealed: true,
-      };
-    });
-
-    // Create reversals array for the reading
-    const reversals = selectedCards.map((card) => card.isReversed);
-
-    // Generate the complete reading
-    const reading = tarotService.generateReading(
-      selectedCardIds,
-      cardPositions,
-      reversals
-    );
-
-    setReadingResult(reading);
-  };
-
-  // Start a new reading
+  // Handle new reading
   const handleNewReading = () => {
     navigate("/");
   };
@@ -326,14 +285,12 @@ const ReadingPage = () => {
       </div>
 
       <div className="reading-content">
-        <h2 className="question-display">{question}</h2>
-
         <div className="reading-area">
           {!selectionComplete ? (
             <>
-              <p className="selection-guidance">
+              {deckDisplayed && <p className="selection-guidance">
                 Select three cards for your reading
-              </p>
+              </p>}
 
               <div className="card-fan">
                 {springs.map((style, index) => {
@@ -368,75 +325,38 @@ const ReadingPage = () => {
                   );
                 })}
               </div>
+
+              {!deckDisplayed && (
+                <button
+                  className="shuffle-btn"
+                  onClick={performRiffleShuffle}
+                  disabled={shuffling}
+                >
+                  {shuffling ? "Shuffling..." : "Shuffle"}
+                </button>
+              )}
             </>
           ) : (
-            <div className="selected-cards-container">
-              <div className="selected-cards">
-                {selectedCardIds.map((cardId, index) => {
-                  const card = cardDeck.find((c) => c.id === cardId);
-                  return (
-                    <TarotCard
-                      key={cardId}
-                      id={cardId}
-                      frontImage={card.img}
-                      backImage="/cards/back.png"
-                      isSelected={true}
-                      isRevealed={revealedCardIds.includes(cardId)}
-                      isReversed={card.isReversed}
-                      position={cardPositions[index]}
-                      animationDelay={index * 500}
-                    />
-                  );
-                })}
-              </div>
-
-              {readingResult && (
-                <div className="reading-interpretation">
-                  <h3>Your Reading</h3>
-
-                  <div className="cards-meaning">
-                    {readingResult.cards.map((card, index) => (
-                      <div key={index} className="card-meaning">
-                        <h4>
-                          {card.position}: {card.name}{" "}
-                          {card.isReversed ? "(Reversed)" : ""}
-                        </h4>
-                        <p>
-                          {card.isReversed
-                            ? card.meanings.reversed.join(", ")
-                            : card.meanings.upright.join(", ")}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="overall-interpretation">
-                    <h4>Overall Interpretation</h4>
-                    <p>{readingResult.overallInterpretation}</p>
-                  </div>
-
-                  <button
-                    className="new-reading-btn"
-                    onClick={handleNewReading}
-                  >
-                    New Reading
-                  </button>
-                </div>
+            <>
+              {selectionComplete && (
+                <ReadingChat
+                  question={question}
+                  cards={selectedCardIds.map((cardId, index) => {
+                    const card = cardDeck.find((c) => c.id === cardId);
+                    return {
+                      ...card,
+                      position: cardPositions[index],
+                      isRevealed: true,
+                    };
+                  })}
+                  personality={personality}
+                  gender={gender}
+                  onStartNewQuestion={handleNewReading}
+                />
               )}
-            </div>
+            </>
           )}
         </div>
-        {!deckDisplayed && (
-          <div className={`deck-container ${shuffling ? "shuffling" : ""}`}>
-            <button
-              className="shuffle-btn"
-              onClick={performRiffleShuffle}
-              disabled={shuffling}
-            >
-              {shuffling ? "Shuffling..." : "Shuffle"}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
