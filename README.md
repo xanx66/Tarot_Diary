@@ -152,7 +152,7 @@ npm run dev
 | -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------- |
 | Week 1   | Apr 8 – Apr 14  | ✏️ Define core features, user stories, and layout sketches <br>🧠 Research tarot journaling habits & visual styles             | ✅ Completed   |
 | Week 2   | Apr 15 – Apr 21 | 🎨 Design UI wireframes in Figma <br>🔧 Set up project repo and development environment                                        | ✅ Completed   |
-| Week 3   | Apr 22 – Apr 28 | 💻 Implement daily card draw template <br>📝 Build basic journal entry input and storage                                       | 🔄 In Progress |
+| Week 3   | Apr 22 – Apr 28 | 💻 Implement daily card draw template <br>📝 Build basic journal entry input and storage                                       | ✅ Completed   |
 | Week 4   | Apr 29 – May 5  | ✅ Modular API, CORS, and AI chat integration <br>📊 Develop spread tracker component <br>🌙 Add moon phases / visual elements | ✅ Completed   |
 | Week 5   | May 13 – May 19 | 🧪 Conduct user testing with tarot readers <br>🪄 Refine features based on feedback <br>🔐 Implement optional authentication   | ✅ Completed   |
 | Week 6   | May 20 – May 26 | 📁 Add instructional guide content <br>🔒 Address privacy considerations <br>📱 Mobile responsiveness improvements             | ✅ Completed   |
